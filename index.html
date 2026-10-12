@@ -180,6 +180,20 @@ window._satellite._monitors.push({
       <input type="email" id="f-email" autocomplete="email" required="">
     </div>
     <div class="field">
+      <label for="f-function">Job function</label>
+      <select id="f-function">
+        <option value="">Select your function</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Product">Product</option>
+        <option value="Design">Design</option>
+        <option value="Marketing">Marketing</option>
+        <option value="Sales">Sales</option>
+        <option value="Operations">Operations</option>
+        <option value="People &amp; HR">People &amp; HR</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="field">
       <label for="f-story">LinkedIn Profile (not visible to anyone)</label>
       <textarea id="f-story"></textarea>
     </div>
@@ -207,7 +221,7 @@ window._satellite._monitors.push({
   // "Anyone with the link", verified 2026-10-12).
   var CONFIG = {
     endpoint: 'https://docs.google.com/forms/d/e/1FAIpQLSf4sngDfyIK8Za7286CtZ6Pq7MMfF76U7EQ6u7x7y7VEttTKA/formResponse',
-    entries: { name: 'entry.1923042000', email: 'entry.1616939602', story: 'entry.1456886301', wants: 'entry.2028165513', referral: 'entry.1818489668' }
+    entries: { name: 'entry.1923042000', email: 'entry.1616939602', story: 'entry.1456886301', wants: 'entry.2028165513', referral: 'entry.1818489668', jobFunction: 'entry.661880214' }
   };
   var form = document.getElementById('waitlistForm');
   var errorEl = document.getElementById('formError');
@@ -224,6 +238,8 @@ window._satellite._monitors.push({
     var story = document.getElementById('f-story').value.trim();
     var referralEl = document.getElementById('f-referral');
     var referral = referralEl ? referralEl.value.trim() : '';
+    var jobFunctionEl = document.getElementById('f-function');
+    var jobFunction = jobFunctionEl ? jobFunctionEl.value : '';
     var wants = Array.prototype.slice.call(document.querySelectorAll('#f-wants input:checked')).map(function(c){ return c.value; });
 
     if(!name){ showError('Tell us what to call you. A nickname is fine.'); return; }
@@ -243,6 +259,7 @@ window._satellite._monitors.push({
     if(story) body.set(CONFIG.entries.story, story);
     wants.forEach(function(w){ body.append(CONFIG.entries.wants, w); });
     if(referral) body.set(CONFIG.entries.referral, referral);
+    if(jobFunction && CONFIG.entries.jobFunction) body.set(CONFIG.entries.jobFunction, jobFunction);
     fetch(CONFIG.endpoint, {method: 'POST', mode: 'no-cors', body: body}).then(function(){
       form.style.display = 'none';
       document.getElementById('doneMsg').style.display = 'block';
