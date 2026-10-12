@@ -203,9 +203,8 @@ window._satellite._monitors.push({
 
 <script>
   // Posts to the Tech Layoff Club Google Form, which feeds the linked
-  // Sheet. Entry IDs are filled in once the form's responder access is
-  // set to "Anyone with the link"; until then the form explains itself
-  // instead of pretending a submission went through.
+  // Sheet. Entry IDs below point at the live form (responder access is
+  // "Anyone with the link", verified 2026-10-12).
   var CONFIG = {
     endpoint: 'https://docs.google.com/forms/d/e/1FAIpQLSf4sngDfyIK8Za7286CtZ6Pq7MMfF76U7EQ6u7x7y7VEttTKA/formResponse',
     entries: { name: 'entry.1923042000', email: 'entry.1616939602', story: 'entry.1456886301', wants: 'entry.2028165513', referral: 'entry.1818489668' }
@@ -223,7 +222,8 @@ window._satellite._monitors.push({
     var name = document.getElementById('f-name').value.trim();
     var email = document.getElementById('f-email').value.trim();
     var story = document.getElementById('f-story').value.trim();
-    var referral = document.getElementById('f-referral').value.trim();
+    var referralEl = document.getElementById('f-referral');
+    var referral = referralEl ? referralEl.value.trim() : '';
     var wants = Array.prototype.slice.call(document.querySelectorAll('#f-wants input:checked')).map(function(c){ return c.value; });
 
     if(!name){ showError('Tell us what to call you. A nickname is fine.'); return; }
