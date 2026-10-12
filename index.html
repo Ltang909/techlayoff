@@ -194,6 +194,10 @@ window._satellite._monitors.push({
       </select>
     </div>
     <div class="field">
+      <label for="f-story">LinkedIn Profile (not visible to anyone)</label>
+      <textarea id="f-story"></textarea>
+    </div>
+    <div class="field">
       <label>What would you want most?</label>
       <div class="checks" id="f-wants">
         <label><input type="checkbox" value="A 1:1 coffee chat with someone in the same spot"> 1:1 online coffee chats</label>
@@ -217,7 +221,7 @@ window._satellite._monitors.push({
   // "Anyone with the link", verified 2026-10-12).
   var CONFIG = {
     endpoint: 'https://docs.google.com/forms/d/e/1FAIpQLSf4sngDfyIK8Za7286CtZ6Pq7MMfF76U7EQ6u7x7y7VEttTKA/formResponse',
-    entries: { name: 'entry.1923042000', email: 'entry.1616939602', wants: 'entry.2028165513', referral: 'entry.1818489668', jobFunction: 'entry.661880214' }
+    entries: { name: 'entry.1923042000', email: 'entry.1616939602', story: 'entry.788258972', wants: 'entry.2028165513', referral: 'entry.1818489668', jobFunction: 'entry.661880214' }
   };
   var form = document.getElementById('waitlistForm');
   var errorEl = document.getElementById('formError');
@@ -231,6 +235,8 @@ window._satellite._monitors.push({
     clearError();
     var name = document.getElementById('f-name').value.trim();
     var email = document.getElementById('f-email').value.trim();
+    var storyEl = document.getElementById('f-story');
+    var story = storyEl ? storyEl.value.trim() : '';
     var referralEl = document.getElementById('f-referral');
     var referral = referralEl ? referralEl.value.trim() : '';
     var jobFunctionEl = document.getElementById('f-function');
@@ -251,6 +257,7 @@ window._satellite._monitors.push({
     var body = new URLSearchParams();
     body.set(CONFIG.entries.name, name);
     body.set(CONFIG.entries.email, email);
+    if(story) body.set(CONFIG.entries.story, story);
     wants.forEach(function(w){ body.append(CONFIG.entries.wants, w); });
     if(referral) body.set(CONFIG.entries.referral, referral);
     if(jobFunction && CONFIG.entries.jobFunction) body.set(CONFIG.entries.jobFunction, jobFunction);
