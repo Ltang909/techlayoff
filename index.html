@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech Layoff Club | Coffee chats for laid-off tech workers</title>
+<meta name="description" content="Recently laid off from a tech job? Tech Layoff Club matches you with another laid-off tech worker for a one-to-one coffee chat. Hand-matched, anonymous, no job board, no feed. Join the waitlist.">
+<style>
+  :root{ --ink:#1c1e1c; --muted:#5c615c; --line:#d8dad4; --accent:#a35d4d; --bg:#fafaf7; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  .wrap{max-width:640px;margin:0 auto;padding:56px 22px 72px}
+  h1{font-size:40px;line-height:1.15;font-weight:600}
+  .sub{margin-top:18px;font-size:18px}
+  h2{font-size:21px;margin:44px 0 12px;font-weight:600}
+  p,li{font-size:16.5px}
+  ol,ul{padding-left:22px}
+  li{margin:6px 0}
+  form{margin-top:26px;border-top:1px solid var(--line);padding-top:26px}
+  .field{margin-bottom:18px}
+  label{display:block;font-family:Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:6px}
+  label .opt{font-weight:400;color:var(--muted)}
+  input[type="text"],input[type="email"],textarea{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);background:#fff;border-radius:4px}
+  textarea{min-height:84px;resize:vertical}
+  .checks label{display:flex;gap:9px;align-items:flex-start;font-family:inherit;font-size:16px;font-weight:400;letter-spacing:0;margin:8px 0;cursor:pointer}
+  .checks input{margin-top:4px}
+  button{font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;background:var(--ink);color:#fff;border:0;border-radius:4px;padding:13px 26px;cursor:pointer}
+  button[disabled]{opacity:.6;cursor:wait}
+  .fine{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .error{margin-top:12px;font-size:14.5px;color:var(--accent);display:none}
+  .done{display:none;border:1px solid var(--line);background:#fff;border-radius:4px;padding:18px 20px;margin-top:26px}
+  .closing{margin-top:48px;border-top:1px solid var(--line);padding-top:22px;font-size:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Recently laid off? You don't have to sit in it alone.</h1>
+  <p class="sub">Tech Layoff Club pairs laid-off tech workers for one-to-one coffee chats. Every match is made by a person, not an algorithm. You can stay anonymous. There is no job board, no feed, and nothing to perform for.</p>
+
+  <h2>How it works</h2>
+  <ol>
+    <li>Join the waitlist. Email, plus a few short questions so the match is a good one.</li>
+    <li>We match you by hand with someone in a similar spot.</li>
+    <li>You talk. Voice, video, or text. Whatever feels easiest.</li>
+  </ol>
+
+  <h2>What this is not</h2>
+  <p>Not a job board. Job leads may come up in conversation, and that is fine, but nobody is here to pitch you.</p>
+  <p style="margin-top:8px">Not a networking event. No name tags, no elevator pitches, no crowd to work.</p>
+  <p style="margin-top:8px">Not a giant group chat. Two people, one conversation. Small groups may come later, only if members ask for them.</p>
+
+  <h2>Private by default</h2>
+  <p>Use a nickname if you want. There is no public profile and nothing gets posted anywhere. Your match only sees what you choose to share with them.</p>
+
+  <form id="waitlistForm" novalidate>
+    <div class="field">
+      <label for="f-name">What should we call you?</label>
+      <input type="text" id="f-name" autocomplete="nickname" required>
+      <p class="fine">A nickname is fine.</p>
+    </div>
+    <div class="field">
+      <label for="f-email">Email</label>
+      <input type="email" id="f-email" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="f-story">What happened? <span class="opt">(optional)</span></label>
+      <textarea id="f-story"></textarea>
+      <p class="fine">Only if you feel like sharing.</p>
+    </div>
+    <div class="field">
+      <label>What would you want most?</label>
+      <div class="checks" id="f-wants">
+        <label><input type="checkbox" value="A 1:1 coffee chat with someone in the same spot"> A 1:1 coffee chat with someone in the same spot</label>
+        <label><input type="checkbox" value="Small group conversations (later, optional)"> Small group conversations (later, optional)</label>
+        <label><input type="checkbox" value="Job leads and referrals"> Job leads and referrals</label>
+        <label><input type="checkbox" value="Just lurking for now"> Just lurking for now</label>
+      </div>
+    </div>
+    <div class="field">
+      <label for="f-referral">Know someone else who was laid off? <span class="opt">(optional)</span></label>
+      <input type="text" id="f-referral">
+      <p class="fine">Their email, if they would want an invite.</p>
+    </div>
+    <button type="submit" id="submitBtn">Join the waitlist</button>
+    <p class="fine">The first matches are being made by hand, in small batches. No spam, ever. Your email is never shared.</p>
+    <p class="error" id="formError" role="alert"></p>
+  </form>
+  <div class="done" id="doneMsg">You are in. We match in small batches, by hand, so it may take a little while. Watch your inbox.</div>
+
+  <p class="closing">Started by someone who was laid off too. This is the thing I went looking for and could not find.</p>
+
+</div>
+
+<script>
+  // Posts to the Tech Layoff Club Google Form, which feeds the linked
+  // Sheet. Entry IDs are filled in once the form's responder access is
+  // set to "Anyone with the link"; until then the form explains itself
+  // instead of pretending a submission went through.
+  var CONFIG = {
+    endpoint: 'https://docs.google.com/forms/d/e/1FAIpQLSfKDZoe1uu9bfCk0V1gjs_EdcrgyuXYBQ9JTIFAvnZIRllaYw/formResponse',
+    entries: { name: '', email: '', story: '', wants: '', referral: '' }
+  };
+  var form = document.getElementById('waitlistForm');
+  var errorEl = document.getElementById('formError');
+  var button = document.getElementById('submitBtn');
+
+  function showError(msg){ errorEl.textContent = msg; errorEl.style.display = 'block'; }
+  function clearError(){ errorEl.textContent = ''; errorEl.style.display = 'none'; }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    clearError();
+    var name = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var story = document.getElementById('f-story').value.trim();
+    var referral = document.getElementById('f-referral').value.trim();
+    var wants = Array.prototype.slice.call(document.querySelectorAll('#f-wants input:checked')).map(function(c){ return c.value; });
+
+    if(!name){ showError('Tell us what to call you. A nickname is fine.'); return; }
+    if(!email || email.indexOf('@') === -1 || email.split('@')[1].indexOf('.') === -1){ showError('That email address does not look complete.'); return; }
+    if(wants.length === 0){ showError('Pick at least one thing you would want most.'); return; }
+
+    if(!CONFIG.entries.email){
+      showError('The waitlist opens in a moment. Please check back shortly.');
+      return;
+    }
+    button.disabled = true;
+    var original = button.textContent;
+    button.textContent = 'Joining...';
+    var body = new URLSearchParams();
+    body.set(CONFIG.entries.name, name);
+    body.set(CONFIG.entries.email, email);
+    if(story) body.set(CONFIG.entries.story, story);
+    wants.forEach(function(w){ body.append(CONFIG.entries.wants, w); });
+    if(referral) body.set(CONFIG.entries.referral, referral);
+    fetch(CONFIG.endpoint, {method: 'POST', mode: 'no-cors', body: body}).then(function(){
+      form.style.display = 'none';
+      document.getElementById('doneMsg').style.display = 'block';
+    }).catch(function(){
+      showError('Something went wrong on our side. Please try again.');
+    }).finally(function(){
+      button.disabled = false;
+      button.textContent = original;
+    });
+  });
+</script>
+
+</body>
+</html>
