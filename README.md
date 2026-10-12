@@ -1,6 +1,6 @@
 # Tech Layoff Club
 
-techlayoffclub.com: a waitlist for laid-off tech workers. Curated 1:1 coffee
+techlayoffclub.com: a community for laid-off tech workers. Curated 1:1 coffee
 chats, matched by hand. Anonymous by default. Not a job board.
 
 ## Files
