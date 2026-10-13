@@ -174,16 +174,16 @@ A full calendar used to come with the job. The good conversations do not have to
 
 <form id="waitlistForm" novalidate="">
     <div class="field">
-      <label for="f-name">What should we call you?</label>
+      <label for="f-name">What should we call you? (only thing public facing)</label>
       <input type="text" id="f-name" autocomplete="nickname" required="">
       <p class="fine">A nickname is fine.</p>
     </div>
     <div class="field">
-      <label for="f-email">Email</label>
+      <label for="f-email">Email (won't be public facing, used to send meeting invites)</label>
       <input type="email" id="f-email" autocomplete="email" required="">
     </div>
     <div class="field">
-      <label for="f-function">Job function</label>
+      <label for="f-function">Job function (used to curate chats)</label>
       <select id="f-function">
         <option value="">Select your function</option>
         <option value="Engineering">Engineering</option>
@@ -194,10 +194,11 @@ A full calendar used to come with the job. The good conversations do not have to
         <option value="Operations">Operations</option>
         <option value="People &amp; HR">People &amp; HR</option>
         <option value="Other">Other</option>
+        <option value="Prefer not to disclose">Prefer not to disclose</option>
       </select>
     </div>
     <div class="field">
-      <label for="f-story">LinkedIn Profile (not visible to anyone)</label>
+      <label for="f-story">LinkedIn Profile - not visible to anyone, used only to verify past employment to ensure the quality of the community</label>
       <input type="url" id="f-story" inputmode="url" autocomplete="url" spellcheck="false" placeholder="linkedin.com/in/yourname">
     </div>
     <div class="field">
@@ -213,7 +214,7 @@ A full calendar used to come with the job. The good conversations do not have to
     <p class="error" id="formError" role="alert"></p>
   </form>
 
-  <div class="done" id="doneMsg">Request received. We're still building a waitlist to ensure people get matched with someone.</div>
+  <div class="done" id="doneMsg">Request received. We're still building a waitlist to ensure people get matched with someone. I'll send out an email confirmation after review.</div>
 
   <p class="closing">Started by someone who was laid off too. This is the thing I went looking for and could not find.</p>
 
